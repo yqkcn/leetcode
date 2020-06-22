@@ -1,9 +1,7 @@
-package leetcode
-
-import "fmt"
+package main
 
 func main() {
-	params := []int{1, 2,3,4}
+	params := []int{1,2,3,4}
 	productExceptSelf(params)
 }
 
@@ -13,7 +11,10 @@ func productExceptSelf(nums []int) []int {
 	for i, num := range nums {
 		_, found := cache[num]
 		if !found {
-			cache[num] = getMul(append(nums[:i], nums[i+1:len(nums)]...))
+			var _nums []int
+			_nums = append(_nums, nums[:i]...)
+			_nums = append(_nums, nums[i+1:len(nums)]...)
+			cache[num] = getMul(_nums)
 		}
 		res = append(res, cache[num])
 	}
@@ -25,6 +26,5 @@ func getMul(nums []int) int {
 	for _, num := range nums {
 		res *= num
 	}
-	fmt.Printf("%d", res)
 	return res
 }
