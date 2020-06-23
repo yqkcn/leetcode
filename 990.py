@@ -18,6 +18,7 @@ class Solution:
                     continue
                 equations = [_.replace(char_2, char_1) for _ in equations]
                 flag = True
+                break
         return True
 
 if __name__ == '__main__':
