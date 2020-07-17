@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func subsetsWithDup(nums []int) [][]int {
 	var res [][]int
 	if nums == nil {
@@ -18,10 +20,23 @@ func subsetsWithDup(nums []int) [][]int {
 		if cache[num] {
 			continue
 		}
+		cache[num] = true
 		var cur [][]int
 		for i := 0; i < count[num]; i++ {
-
+			for _, sub := range res {
+				var newSub []int
+				newSub = append(newSub, sub...)
+				for j := 0; j <= i; j++ {
+					newSub = append(newSub, num)
+				}
+				cur = append(cur, newSub)
+			}
 		}
+		res = append(res, cur...)
 	}
+	return res
+}
 
+func main() {
+	fmt.Print(subsetsWithDup([]int{1, 2, 2}))
 }
