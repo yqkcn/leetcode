@@ -14,8 +14,12 @@ func maximalRectangle(matrix [][]byte) int {
 				continue
 			}
 			// 只取右下角的数据，左上方不用考虑，因为之前的数已经搜索过了
+			maxK := m
 			maxL := n
-			for k := i; k < m; k++ {
+			for k := i; k < maxK; k++ {
+				if matrix[k][j] == '0' {
+					break
+				}
 				for l := j; l < maxL; l++ {
 					// 一个子矩阵全是1，比较子矩阵面积和最大面积
 					if isAllOne(matrix, i, j, k, l) {
