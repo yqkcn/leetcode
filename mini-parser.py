@@ -48,47 +48,32 @@ class Solution:
     def deserialize(self, s: str) -> NestedInteger:
         if not s:
             return NestedInteger()
+        if s[0] != "[":
+            return NestedInteger(int(s))
         stack = []
         for w in s:
-            if w == "[":
-                if stack and not stack[-1]:
-                    stack[-1] = w
-                else:
-                    stack.append(w)
+            if w == "[" or w == "-":
+                stack.append(w)
             elif w == ",":
-                # 开始新的元素
-                stack.append("")
+                if not isinstance(stack[-1], NestedInteger):
+                    stack[-1] = NestedInteger(int(stack[-1]))
             elif w.isdigit():
-                if stack and stack[-1].isdigit():
+                if isinstance(stack[-1], str) and stack[-1] != "[":
                     stack[-1] += w
                 else:
                     stack.append(w)
             elif w == "]":
-                _cur = []
-                while stack[-1] != "[":
-                    cur = stack.pop()
-                    if not cur:
-                        continue
-                    if isinstance(cur, NestedInteger):
-                        _cur.append(cur)
-                    elif isinstance(cur, list):
-                        n = NestedInteger()
-                        for x in cur[::-1]:
-                            n.add(x)
-                        _cur.append(n)
-                    else:
-                        _cur.append(NestedInteger(int(cur)))
-                stack.pop()
-                stack.append(_cur)
-        stack = stack[0]
-        if not isinstance(stack, list):
-            return NestedInteger(int(stack))
-        if len(stack) == 1:
-            return stack[0]
-        res = NestedInteger()
-        for x in stack[::-1]:
-            res.add(x)
-        return res
+                cur = []
+                while True:
+                    value = stack.pop()
+                    if value == "[":
+                        break
+                    cur.insert(0, value if isinstance(value, NestedInteger) else NestedInteger(int(value)))
+                node = NestedInteger()
+                for x in cur:
+                    node.add(x)
+                stack.append(node)
+        return stack[0]
 
 
 if __name__ == '__main__':
