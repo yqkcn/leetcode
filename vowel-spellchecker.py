@@ -32,7 +32,7 @@ class Solution:
                 result.append(query)
             elif query.lower() in lower_words:
                 result.append(lower_words[query.lower()][0])
-            elif (_query := query.lower().replace("a", "#").replace("e", "#").replace("i", "#").replace("o", "#").replace("u", "#")) in replaced_words:
+            elif (_query := "".join(letter if letter not in "aeiou" else "#" for letter in query.lower())) in replaced_words:
                 result.append(replaced_words[_query][0])
             else:
                 result.append("")
