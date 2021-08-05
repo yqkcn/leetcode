@@ -22,3 +22,15 @@ class Solution:
             return True
         # 输
         return False
+
+
+class Solution:
+    def PredictTheWinner(self, nums: List[int]) -> bool:
+        def dfs(s, e, step):
+            if s == e:
+                return nums[s] * step
+            num1 = nums[s] * step + dfs(s + 1, e, -step)
+            num2 = nums[e] * step + dfs(s, e - 1, -step)
+            return max(num1, num2) if step == 1 else min(num1, num2)
+
+        return dfs(0, len(nums) - 1, 1) >= 0
