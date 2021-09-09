@@ -1,10 +1,13 @@
 package main
 
-import "sort"
+import (
+	"fmt"
+	"sort"
+)
 
-func wiggleSort(nums []int) {
+func wiggleSort2(nums []int) {
 	sort.Ints(nums)
-	res := []int{}
+	var res []int
 	left, right := 0, len(nums)-1
 	for left < right {
 		res = append(res, nums[left])
@@ -16,4 +19,10 @@ func wiggleSort(nums []int) {
 		res = append(res, nums[left])
 	}
 	copy(nums, res)
+	fmt.Printf("%v", nums)
+}
+
+func main() {
+	nums := []int{5, 3, 1, 2, 3}
+	wiggleSort2(nums)
 }
