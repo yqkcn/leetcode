@@ -25,30 +25,23 @@ class Solution:
                 angles.append(degrees(atan2(y, x)))
             # 第二象限
             elif x < 0 and y > 0:
-                angles.append(degrees(atan2(y, -x)) + 90)
+                angles.append(degrees(atan2(-x, y)) + 90)
             # 第三象限
             elif x < 0 and y < 0:
-                angles.append(degrees(atan2(y, -x)) + 180)
+                angles.append(degrees(atan2(-y, -x)) + 180)
             # 第四象限
             elif x > 0 and y < 0:
-                angles.append(degrees(atan2(-y, -x)) + 270)
+                angles.append(degrees(atan2(x, -y)) + 270)
         # 排序
         angles.sort()
         length = len(angles)
         # double 接起来
         angles = angles + [x + 360 for x in angles]
+        ans = right = 0
         # 滑动窗口
-        ans = num = left = right = 0
-        # 从 0 开始
-        while left <= length and right < len(angles):
-            ans = max(ans, num)
-            if angles[left] + angle >= angles[right]:
+        for i in range(length):
+            while right <= len(angles) and angles[right] <= angles[i] + angle:
                 right += 1
-                num += 1
-                continue
-            while angles[left] < angles[right] - angle:
-                left += 1
-                num -= 1
-            num += 1
-            right += 1
+            ans = max(ans, right - i)
         return ans + zero
+
