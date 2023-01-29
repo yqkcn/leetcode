@@ -11,3 +11,8 @@ class Solution:
             elif i == "*":
                 cur += 1
         return res + cur
+
+
+class Solution:
+    def countAsterisks(self, s: str) -> int:
+        return sum(x.count("*") for x in s.split("|")[::2])
